@@ -10,7 +10,11 @@ class ToDoController {
 
 	static async ToDoList(req, res) {
 		const toDo = await ToDo.findAll();
-		res.json(toDo);
+		const toDoFormatado = toDo.map((tarefa) => ({
+			...tarefa.dataValues,
+			date: tarefa.date ? tarefa.date.toISOString().split('T')[0] : '',
+		}));
+		res.json(toDoFormatado);
 	}
 
 	static async ToDoListDirectory(req, res) {
